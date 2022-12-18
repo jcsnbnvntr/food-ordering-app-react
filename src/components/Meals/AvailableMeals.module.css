@@ -11,6 +11,11 @@
     padding: 0;
 }
 
+.meals h2 {
+    text-align: center;
+    color: #272d2f;
+}
+
 @keyframes meals-appear {
     from {
         opacity: 0;

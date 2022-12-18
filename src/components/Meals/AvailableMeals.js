@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import classes from "./AvailableMeals.module.css";
 import MealItem from "./MealItem";
 import Card from "../UI/Card";
+import Search from "../UI/Search";
 
 const DUMMY_MEALS = [
   {
@@ -31,22 +32,61 @@ const DUMMY_MEALS = [
 ];
 
 const AvailableMeals = () => {
-  const mealsList = DUMMY_MEALS.map((meal) => {
-    return (
-      <MealItem
-        id={meal.id}
-        key={meal.id}
-        name={meal.name}
-        description={meal.description}
-        price={meal.price}
-      />
-    );
-  });
+  const [searchKey, setSearchKey] = useState(undefined);
+  const [mealsList, setMealsList] = useState([...DUMMY_MEALS]);
+
+  useEffect(() => {
+    // cancel filtering if this component is rendered for the first time
+    if (searchKey === undefined) return;
+
+    // debouncing
+    const timer = setTimeout(() => {
+      const filteredMeals = DUMMY_MEALS.filter((meal) =>
+        meal.name.toLocaleLowerCase().includes(searchKey.toLocaleLowerCase())
+      );
+      setMealsList(filteredMeals);
+    }, 1000);
+
+    // cleanup function
+    return () => {
+      // cancel the previous timer until the last timer is executed
+      clearTimeout(timer);
+    };
+  }, [searchKey]);
+
+  const searchHandler = useCallback((ev) => {
+    const key = ev.target.value;
+    setSearchKey(key.trim());
+  }, []);
+
+  const clearHandler = () => {
+    setSearchKey("");
+  };
 
   return (
     <section className={classes.meals}>
       <Card>
-        <ul>{mealsList}</ul>
+        <Search
+          value={searchKey}
+          onSearch={searchHandler}
+          onClear={clearHandler}
+          showClearButton={searchKey?.trim().length > 0}
+        />
+        <ul>
+          {mealsList.length > 0 &&
+            mealsList.map((meal) => {
+              return (
+                <MealItem
+                  id={meal.id}
+                  key={meal.id}
+                  name={meal.name}
+                  description={meal.description}
+                  price={meal.price}
+                />
+              );
+            })}
+          {mealsList.length === 0 && <h2>No results found</h2> /* fallback */}
+        </ul>
       </Card>
     </section>
   );
