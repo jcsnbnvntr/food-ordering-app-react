@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import CartContext from "../../../store/cart-context";
-import CartIcon from "../../Cart/CartIcon";
 import classes from "./HeaderCartButton.module.css";
+import { HiShoppingCart } from "react-icons/hi";
+import { IconContext } from "react-icons";
 
 const HeaderCartButton = (props) => {
   const { items } = useContext(CartContext);
@@ -34,7 +35,9 @@ const HeaderCartButton = (props) => {
   return (
     <button className={buttonClasses} onClick={props.onClick}>
       <span className={classes.icon}>
-        <CartIcon />
+        <IconContext.Provider value={{ size: 21 }}>
+          <HiShoppingCart />
+        </IconContext.Provider>
       </span>
       <span>Your Cart</span>
       <span className={classes.badge}>{numberOfCartItems}</span>
