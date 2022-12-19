@@ -59,9 +59,9 @@ const AvailableMeals = () => {
     setSearchKey(key.trim());
   }, []);
 
-  const clearHandler = () => {
+  const clearHandler = useCallback(() => {
     setSearchKey("");
-  };
+  }, []);
 
   return (
     <section className={classes.meals}>
