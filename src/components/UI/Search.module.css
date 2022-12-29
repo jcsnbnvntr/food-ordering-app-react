@@ -1,31 +1,31 @@
 .search-container {
-    position: relative;
+  position: relative;
 }
 
 .icon {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .search-icon {
-    left: 1rem;
-    color: gray;
+  left: 1rem;
+  color: gray;
 }
 
 .clear-icon {
-    right: 1rem;
-    color: gray;
-    cursor: pointer;
+  right: 1rem;
+  color: gray;
+  cursor: pointer;
 }
 
 .clear-icon:hover {
-    color: #272d2f;
+  color: #272d2f;
 }
 
 .search-input input {
-    width: 100%;
-    padding: 1rem  3.5rem;
-    margin: 0 auto;
-    background: #f7f6f44d;
+  width: 100%;
+  padding: 1rem 3.5rem;
+  margin: 0 auto;
+  background: #f7f6f44d;
 }
