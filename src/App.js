@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Cart from "./components/Cart";
 import Header from "./components/Layout/Header";
-import Meals from "./components/Meals";
 import CartProvider from "./store/CartProvider";
+import Meals from "./components/Meals";
 
 const App = () => {
   const [cartIsShown, setCartIsShown] = useState(false);

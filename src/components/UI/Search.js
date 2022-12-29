@@ -1,9 +1,11 @@
-import React, { useRef } from "react";
-import Input from "./Input";
-import classes from "./Search.module.css";
+import { memo, useRef } from "react";
+
+import { IconContext } from "react-icons";
 import { TbSearch } from "react-icons/tb";
 import { RiCloseFill } from "react-icons/ri";
-import { IconContext } from "react-icons";
+
+import Input from "./Input";
+import classes from "./Search.module.css";
 
 const Search = (props) => {
   const inputRef = useRef();
@@ -40,4 +42,4 @@ const Search = (props) => {
   );
 };
 
-export default React.memo(Search);
+export default memo(Search);

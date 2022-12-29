@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
-import classes from "./AvailableMeals.module.css";
-import MealItem from "./MealItem";
+import { useCallback, useEffect, useState } from "react";
+
 import Card from "../UI/Card";
+import MealItem from "./MealItem";
 import Search from "../UI/Search";
+import classes from "./AvailableMeals.module.css";
 import useHttp from "../../hooks/use-http";
 
 const AvailableMeals = () => {
