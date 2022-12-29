@@ -3,37 +3,35 @@ import classes from "./AvailableMeals.module.css";
 import MealItem from "./MealItem";
 import Card from "../UI/Card";
 import Search from "../UI/Search";
-
-const DUMMY_MEALS = [
-  {
-    id: "m1",
-    name: "Sushi",
-    description: "Finest fish and veggies",
-    price: 22.99,
-  },
-  {
-    id: "m2",
-    name: "Schnitzel",
-    description: "A german specialty!",
-    price: 16.5,
-  },
-  {
-    id: "m3",
-    name: "Barbecue Burger",
-    description: "American, raw, meaty",
-    price: 12.99,
-  },
-  {
-    id: "m4",
-    name: "Green Bowl",
-    description: "Healthy...and green...",
-    price: 18.99,
-  },
-];
+import useHttp from "../../hooks/use-http";
 
 const AvailableMeals = () => {
   const [searchKey, setSearchKey] = useState(undefined);
-  const [mealsList, setMealsList] = useState([...DUMMY_MEALS]);
+  const [mealsList, setMealsList] = useState([]);
+  const [filteredMealsList, setFilteredMealsList] = useState([]);
+  const { isLoading, error, sendRequest: fetchMeals } = useHttp();
+
+  const applyData = (meals) => {
+    const loadedMeals = [];
+    for (const key in meals) {
+      const meal = {
+        id: key,
+        name: meals[key].name,
+        description: meals[key].description,
+        price: meals[key].price,
+      };
+      loadedMeals.push(meal);
+    }
+    setMealsList(loadedMeals);
+    setFilteredMealsList(loadedMeals);
+  };
+
+  useEffect(() => {
+    const requestConfig = {
+      url: "https://food-ordering-app-react-3cdd7-default-rtdb.firebaseio.com/meals.json",
+    };
+    fetchMeals(requestConfig, applyData);
+  }, [fetchMeals]);
 
   useEffect(() => {
     // cancel filtering if this component is rendered for the first time
@@ -41,10 +39,10 @@ const AvailableMeals = () => {
 
     // debouncing
     const timer = setTimeout(() => {
-      const filteredMeals = DUMMY_MEALS.filter((meal) =>
+      const filteredMeals = mealsList.filter((meal) =>
         meal.name.toLocaleLowerCase().includes(searchKey.toLocaleLowerCase())
       );
-      setMealsList(filteredMeals);
+      setFilteredMealsList(filteredMeals);
     }, 1000);
 
     // cleanup function
@@ -52,7 +50,7 @@ const AvailableMeals = () => {
       // cancel the previous timer until the last timer is executed
       clearTimeout(timer);
     };
-  }, [searchKey]);
+  }, [searchKey, mealsList]);
 
   const searchHandler = useCallback((ev) => {
     const key = ev.target.value;
@@ -73,8 +71,8 @@ const AvailableMeals = () => {
           showClearButton={searchKey?.trim().length > 0}
         />
         <ul>
-          {mealsList.length > 0 &&
-            mealsList.map((meal) => {
+          {filteredMealsList.length > 0 &&
+            filteredMealsList.map((meal) => {
               return (
                 <MealItem
                   id={meal.id}
@@ -85,7 +83,11 @@ const AvailableMeals = () => {
                 />
               );
             })}
-          {mealsList.length === 0 && <h2>No results found</h2> /* fallback */}
+          {isLoading && <h2>Loading...</h2>}
+          {!isLoading && !error && filteredMealsList.length === 0 && (
+            <h2>No results found</h2>
+          )}
+          {error && <h2>{error}</h2>}
         </ul>
       </Card>
     </section>
