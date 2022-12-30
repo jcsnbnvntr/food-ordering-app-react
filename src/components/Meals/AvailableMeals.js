@@ -67,6 +67,7 @@ const AvailableMeals = () => {
       <Card>
         <Search
           value={searchKey}
+          placeholder="Search food you love"
           onSearch={searchHandler}
           onClear={clearHandler}
           showClearButton={searchKey?.trim().length > 0}

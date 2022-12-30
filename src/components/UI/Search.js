@@ -1,8 +1,8 @@
 import { memo, useRef } from "react";
 
 import { IconContext } from "react-icons";
-import { TbSearch } from "react-icons/tb";
 import { RiCloseFill } from "react-icons/ri";
+import { TbSearch } from "react-icons/tb";
 
 import Input from "./Input";
 import classes from "./Search.module.css";
@@ -30,11 +30,10 @@ const Search = (props) => {
       </IconContext.Provider>
 
       <Input
-        className={classes["search-input"]}
         ref={inputRef}
         attr={{
           type: "text",
-          placeholder: "Search food you love",
+          placeholder: props.placeholder,
           onChange: props.onSearch,
         }}
       />

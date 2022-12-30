@@ -2,7 +2,8 @@
   position: relative;
 }
 
-.search-input {
+/* override Input component style */
+.search-container input {
   width: 100%;
   padding: 1rem 3.5rem;
   margin: 0 auto;

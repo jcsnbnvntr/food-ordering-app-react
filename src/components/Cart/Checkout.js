@@ -73,10 +73,9 @@ const Checkout = (props) => {
             onChange: firstName.changeHandler,
             onBlur: firstName.blurHandler,
           }}
+          error={firstName.hasError}
+          errorMessage="First name must not be empty"
         />
-        {firstName.hasError && (
-          <p className={classes["error-text"]}>First name must not be empty</p>
-        )}
       </div>
       <div className={lastNameClasses}>
         <label htmlFor="lastName">Last Name</label>
@@ -88,10 +87,9 @@ const Checkout = (props) => {
             onChange: lastName.changeHandler,
             onBlur: lastName.blurHandler,
           }}
+          error={lastName.hasError}
+          errorMessage="Last name must not be empty"
         />
-        {lastName.hasError && (
-          <p className={classes["error-text"]}>Last name must not be empty</p>
-        )}
       </div>
       <div className={emailClasses}>
         <label htmlFor="email">Email</label>
@@ -103,10 +101,9 @@ const Checkout = (props) => {
             onChange: email.changeHandler,
             onBlur: email.blurHandler,
           }}
+          error={email.hasError}
+          errorMessage="Invalid email address"
         />
-        {email.hasError && (
-          <p className={classes["error-text"]}>Invalid email address</p>
-        )}
       </div>
       <div className={phoneNumberClasses}>
         <label htmlFor="phoneNumber">Phone Number</label>
@@ -118,10 +115,9 @@ const Checkout = (props) => {
             onChange: phoneNumber.changeHandler,
             onBlur: phoneNumber.blurHandler,
           }}
+          error={phoneNumber.hasError}
+          errorMessage="Invalid phone number"
         />
-        {phoneNumber.hasError && (
-          <p className={classes["error-text"]}>Invalid phone number</p>
-        )}
       </div>
       <div className={addressClasses}>
         <label htmlFor="address">Address</label>
@@ -133,10 +129,9 @@ const Checkout = (props) => {
             onChange: address.changeHandler,
             onBlur: address.blurHandler,
           }}
+          error={address.hasError}
+          errorMessage="Address must not be empty"
         />
-        {address.hasError && (
-          <p className={classes["error-text"]}>Address must not be empty</p>
-        )}
       </div>
       <div className={postalCodeClasses}>
         <label htmlFor="postal">Postal Code</label>
@@ -148,10 +143,9 @@ const Checkout = (props) => {
             onChange: postalCode.changeHandler,
             onBlur: postalCode.blurHandler,
           }}
+          error={postalCode.hasError}
+          errorMessage="Invalid postal code"
         />
-        {postalCode.hasError && (
-          <p className={classes["error-text"]}>Invalid postal code</p>
-        )}
       </div>
       <div className={classes.actions}>
         <button

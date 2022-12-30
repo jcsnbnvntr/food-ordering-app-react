@@ -21,7 +21,6 @@ const MealItemForm = (props) => {
       <div className={classes["form-control"]}>
         <label htmlFor={`amount_${props.id}`}>Amount</label>
         <Input
-          className={classes["amount-input"]}
           ref={quantityInputRef}
           attr={{
             id: `amount_${props.id}`,

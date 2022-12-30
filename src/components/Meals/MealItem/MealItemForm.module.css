@@ -2,12 +2,19 @@
   text-align: right;
 }
 
-.form-control label {
-  font-weight: bold;
-  margin-right: 1rem;
+.form-control {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
 }
 
-.amount-input {
+.form-control label {
+  font-weight: bold;
+}
+
+/* override Input component style */
+.form-control input {
   width: 3rem;
 }
 

@@ -1,8 +1,29 @@
-.input {
+.input-container input {
   padding: 0.5rem;
   font: inherit;
   color: #272d2f;
   outline-color: #272d2f;
   border-radius: 5px;
   border: 1px solid #ccc;
+}
+
+.error-text {
+  display: none;
+  color: #b40e0e;
+  font-size: 0.8rem;
+}
+
+.invalid input {
+  border: 1px solid #b40e0e;
+  background-color: #fddddd;
+}
+
+.invalid input:focus {
+  border-color: #ff8800;
+  background-color: #fbe8d2;
+  outline: none;
+}
+
+.invalid .error-text {
+  display: block;
 }
