@@ -20,7 +20,10 @@ const useHttp = () => {
 
       const data = await response.json();
 
-      applyData(data); // it depends on how you want to transform the data
+      // invoke conditionally
+      applyData?.(data);
+      // it depends on how you want to transform the data
+
       setIsLoading(false);
     } catch (error) {
       setError(error.message);

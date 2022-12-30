@@ -28,7 +28,7 @@ const Checkout = (props) => {
   const addressClasses = setInputClasses(address.hasError);
   const postalCodeClasses = setInputClasses(postalCode.hasError);
 
-  const isFormValid =
+  const formIsValid =
     firstName.isValid &&
     lastName.isValid &&
     email.isValid &&
@@ -55,7 +55,16 @@ const Checkout = (props) => {
     address.submit();
     postalCode.submit();
 
-    if (!isFormValid) return;
+    if (!formIsValid) return;
+
+    props.onConfirm({
+      firstName: firstName.value,
+      lastName: lastName.value,
+      email: email.value,
+      phoneNumber: phoneNumber.value,
+      address: address.value,
+      postalCode: postalCode.value,
+    });
 
     resetForm();
   };
@@ -156,7 +165,7 @@ const Checkout = (props) => {
           Cancel
         </button>
         <button type="submit" className={classes.submit}>
-          Confirm
+          {props.isSubmittin ? "Submitting" : "Confirm"}
         </button>
       </div>
     </form>

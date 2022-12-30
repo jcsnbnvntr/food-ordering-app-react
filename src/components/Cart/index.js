@@ -5,8 +5,10 @@ import CartItem from "./CartItem";
 import Checkout from "./Checkout";
 import Modal from "../UI/Modal";
 import classes from "./Cart.module.css";
+import useHttp from "../../hooks/use-http";
 
 const Cart = (props) => {
+  const { isLoading, sendRequest: sendOrderRequest } = useHttp();
   const [isCheckout, setIsCheckout] = useState(false);
   const { items, totalAmount, addItem, removeItem } = useContext(CartContext);
   const hasItems = items.length > 0;
@@ -25,6 +27,18 @@ const Cart = (props) => {
 
   const cancelCheckoutHandler = () => {
     setIsCheckout(false);
+  };
+
+  const submitOrderHandler = (userData) => {
+    const requestConfig = {
+      url: "https://food-ordering-app-react-3cdd7-default-rtdb.firebaseio.com/orders.json",
+      method: "POST",
+      body: {
+        user: userData,
+        orderedItems: items,
+      },
+    };
+    sendOrderRequest(requestConfig);
   };
 
   const cartItems = (
@@ -78,7 +92,13 @@ const Cart = (props) => {
   return (
     <Modal onClose={props.onClose}>
       {!isCheckout && cartContent}
-      {isCheckout && <Checkout onCancel={cancelCheckoutHandler} />}
+      {isCheckout && (
+        <Checkout
+          onCancel={cancelCheckoutHandler}
+          onConfirm={submitOrderHandler}
+          isSubmitting={isLoading}
+        />
+      )}
     </Modal>
   );
 };
