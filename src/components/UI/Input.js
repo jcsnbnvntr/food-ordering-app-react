@@ -6,12 +6,7 @@ const Input = forwardRef((props, ref) => {
   const className = `${classes.input} ${
     props.className ? props.className : ""
   }`;
-  return (
-    <div className={className}>
-      {props.label && <label>{props.label}</label>}
-      <input {...props.input} ref={ref} />
-    </div>
-  );
+  return <input className={className} {...props.attr} ref={ref} />;
 });
 
 export default Input;

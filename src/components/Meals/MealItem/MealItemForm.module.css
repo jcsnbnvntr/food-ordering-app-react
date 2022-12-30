@@ -2,6 +2,15 @@
   text-align: right;
 }
 
+.form-control label {
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+.amount-input {
+  width: 3rem;
+}
+
 .form button {
   font: inherit;
   cursor: pointer;

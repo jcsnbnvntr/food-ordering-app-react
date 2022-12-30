@@ -18,18 +18,21 @@ const MealItemForm = (props) => {
 
   return (
     <form className={classes.form} onSubmit={submitHandler}>
-      <Input
-        ref={quantityInputRef}
-        label="Amount"
-        input={{
-          id: "amount_" + props.id,
-          type: "number",
-          min: "1",
-          max: "5",
-          step: "1",
-          defaultValue: "1",
-        }}
-      />
+      <div className={classes["form-control"]}>
+        <label htmlFor={`amount_${props.id}`}>Amount</label>
+        <Input
+          className={classes["amount-input"]}
+          ref={quantityInputRef}
+          attr={{
+            id: `amount_${props.id}`,
+            type: "number",
+            min: "1",
+            max: "5",
+            step: "1",
+            defaultValue: "1",
+          }}
+        />
+      </div>
       <button type="submit">+ Add</button>
     </form>
   );

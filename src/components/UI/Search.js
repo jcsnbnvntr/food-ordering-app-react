@@ -32,7 +32,7 @@ const Search = (props) => {
       <Input
         className={classes["search-input"]}
         ref={inputRef}
-        input={{
+        attr={{
           type: "text",
           placeholder: "Search food you love",
           onChange: props.onSearch,
