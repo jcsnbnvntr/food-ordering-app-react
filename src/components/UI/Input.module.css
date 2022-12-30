@@ -1,9 +1,8 @@
 .input {
-  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  font: inherit;
   color: #272d2f;
+  outline-color: #272d2f;
   border-radius: 5px;
   border: 1px solid #ccc;
-  font: inherit;
-  padding-left: 0.5rem;
-  outline-color: #272d2f;
 }
