@@ -17,7 +17,7 @@ const AvailableMeals = () => {
     for (const key in meals) {
       const meal = {
         id: key,
-        name: meals[key].name,
+        name: meals[key].name, // firebase-specific => "name" contains generated id
         description: meals[key].description,
         price: meals[key].price,
       };

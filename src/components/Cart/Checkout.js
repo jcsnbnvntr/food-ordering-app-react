@@ -28,6 +28,10 @@ const Checkout = (props) => {
   const addressClasses = setInputClasses(address.hasError);
   const postalCodeClasses = setInputClasses(postalCode.hasError);
 
+  const formActionClasses = props.isSubmitting
+    ? `${classes.actions} ${classes.submitting}`
+    : classes.actions;
+
   const formIsValid =
     firstName.isValid &&
     lastName.isValid &&
@@ -35,15 +39,6 @@ const Checkout = (props) => {
     phoneNumber.isValid &&
     address.isValid &&
     postalCode.isValid;
-
-  const resetForm = () => {
-    firstName.reset();
-    lastName.reset();
-    email.reset();
-    phoneNumber.reset();
-    address.reset();
-    postalCode.reset();
-  };
 
   const submitHandler = (ev) => {
     ev.preventDefault();
@@ -57,16 +52,17 @@ const Checkout = (props) => {
 
     if (!formIsValid) return;
 
-    props.onConfirm({
-      firstName: firstName.value,
-      lastName: lastName.value,
-      email: email.value,
-      phoneNumber: phoneNumber.value,
-      address: address.value,
-      postalCode: postalCode.value,
-    });
-
-    resetForm();
+    props.onConfirm(
+      {
+        firstName: firstName.value,
+        lastName: lastName.value,
+        email: email.value,
+        phoneNumber: phoneNumber.value,
+        address: address.value,
+        postalCode: postalCode.value,
+      },
+      new Date()
+    );
   };
 
   return (
@@ -156,7 +152,7 @@ const Checkout = (props) => {
           errorMessage="Invalid postal code"
         />
       </div>
-      <div className={classes.actions}>
+      <div className={formActionClasses}>
         <button
           type="button"
           onClick={props.onCancel}
@@ -165,7 +161,7 @@ const Checkout = (props) => {
           Cancel
         </button>
         <button type="submit" className={classes.submit}>
-          {props.isSubmittin ? "Submitting" : "Confirm"}
+          {props.isSubmitting ? "Submitting" : "Confirm"}
         </button>
       </div>
     </form>

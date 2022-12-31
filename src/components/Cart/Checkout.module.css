@@ -120,6 +120,10 @@
   padding: 0.5rem 2rem;
 }
 
+.submitting button {
+  cursor: not-allowed;
+}
+
 .actions .submit {
   background-color: #ffc529;
   border: 1px solid #ffc529;

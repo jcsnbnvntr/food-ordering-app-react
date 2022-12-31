@@ -4,13 +4,23 @@ import CartContext from "../../store/cart-context";
 import CartItem from "./CartItem";
 import Checkout from "./Checkout";
 import Modal from "../UI/Modal";
+import OrderConfirmation from "./OrderConfirmation";
 import classes from "./Cart.module.css";
 import useHttp from "../../hooks/use-http";
 
 const Cart = (props) => {
-  const { isLoading, sendRequest: sendOrderRequest } = useHttp();
+  const {
+    isLoading,
+    sendRequest: sendOrderRequest,
+    success: didSubmit,
+  } = useHttp();
+
+  const [date, setDate] = useState(null);
   const [isCheckout, setIsCheckout] = useState(false);
-  const { items, totalAmount, addItem, removeItem } = useContext(CartContext);
+  const [orderId, setOrderId] = useState(null);
+  const { items, totalAmount, addItem, removeItem, clearItems } =
+    useContext(CartContext);
+
   const hasItems = items.length > 0;
 
   const cartItemAddHandler = (item) => {
@@ -29,16 +39,24 @@ const Cart = (props) => {
     setIsCheckout(false);
   };
 
-  const submitOrderHandler = (userData) => {
+  const applyData = (date, data) => {
+    const orderId = data.name; // firebase-specific => "name" contains generated id
+    setOrderId(orderId);
+    setDate(date);
+  };
+
+  const submitOrderHandler = (userData, date) => {
     const requestConfig = {
       url: "https://food-ordering-app-react-3cdd7-default-rtdb.firebaseio.com/orders.json",
       method: "POST",
       body: {
+        date: date,
         user: userData,
         orderedItems: items,
       },
     };
-    sendOrderRequest(requestConfig);
+    sendOrderRequest(requestConfig, applyData.bind(null, date)); // applyData is preconfigured
+    clearItems();
   };
 
   const cartItems = (
@@ -81,7 +99,7 @@ const Cart = (props) => {
     </div>
   );
 
-  const cartContent = (
+  const cartModalContent = (
     <Fragment>
       {cartItems}
       {cartTotalAmount}
@@ -91,12 +109,19 @@ const Cart = (props) => {
 
   return (
     <Modal onClose={props.onClose}>
-      {!isCheckout && cartContent}
-      {isCheckout && (
+      {!isCheckout && cartModalContent}
+      {isCheckout && !didSubmit && (
         <Checkout
           onCancel={cancelCheckoutHandler}
           onConfirm={submitOrderHandler}
           isSubmitting={isLoading}
+        />
+      )}
+      {didSubmit && (
+        <OrderConfirmation
+          orderId={orderId}
+          date={date}
+          onClose={props.onClose}
         />
       )}
     </Modal>

@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 
 const useHttp = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
 
   const sendRequest = useCallback(async (requestConfig, applyData) => {
@@ -20,11 +21,13 @@ const useHttp = () => {
 
       const data = await response.json();
 
-      // invoke conditionally
-      applyData?.(data);
-      // it depends on how you want to transform the data
+      // invoke function conditionally
+      applyData?.(data); // it depends on how you want to transform the data
 
-      setIsLoading(false);
+      setTimeout(() => {
+        setSuccess(true);
+        setIsLoading(false);
+      }, 500);
     } catch (error) {
       setError(error.message);
       setIsLoading(false);
@@ -34,6 +37,7 @@ const useHttp = () => {
   return {
     isLoading,
     error,
+    success,
     sendRequest,
   };
 };

@@ -8,13 +8,13 @@ const defaultCartState = {
 };
 
 const cartReducer = (state, action) => {
-  const existingItemOnCartIndex = state.items.findIndex(
-    (item) => item.id === action.payload.id
-  );
-  const existingItemOnCart = state.items[existingItemOnCartIndex];
-
   switch (action.type) {
     case "ADD_ITEM": {
+      const existingItemOnCartIndex = state.items.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      const existingItemOnCart = state.items[existingItemOnCartIndex];
+
       let updatedItems;
       const updatedTotalAmount =
         state.totalAmount + action.payload.price * action.payload.quantity;
@@ -36,6 +36,11 @@ const cartReducer = (state, action) => {
       };
     }
     case "REMOVE_ITEM": {
+      const existingItemOnCartIndex = state.items.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      const existingItemOnCart = state.items[existingItemOnCartIndex];
+
       let updatedItems;
       const updatedTotalAmount = state.totalAmount - existingItemOnCart.price;
 
@@ -59,6 +64,9 @@ const cartReducer = (state, action) => {
         totalAmount: updatedTotalAmount,
       };
     }
+    case "CLEAR ITEMS": {
+      return defaultCartState;
+    }
     default:
       return state;
   }
@@ -79,12 +87,17 @@ const CartProvider = (props) => {
     dispatchCart({ type: "REMOVE_ITEM", payload: { id: id } });
   };
 
+  const clearItemsFromCartHandler = () => {
+    dispatchCart({ type: "CLEAR ITEMS" });
+  };
+
   const cartContext = {
     items: cart.items,
     totalAmount: cart.totalAmount,
     addItem: addItemToCartHandler,
     updateItem: updateItemFromCart,
     removeItem: removeItemFromCartHandler,
+    clearItems: clearItemsFromCartHandler,
   };
 
   return (
