@@ -16,7 +16,7 @@ const useLockScrollbar = () => {
     if (isLocked) {
       body.style.overflow = "hidden";
     } else {
-      body.style.overflow = "auto";
+      body.style.overflow = "unset";
     }
   }, [isLocked, body]);
 
