@@ -1,18 +1,23 @@
 import { useState } from "react";
+
 import Cart from "./components/Cart";
-import Header from "./components/Layout/Header";
 import CartProvider from "./store/CartProvider";
+import Header from "./components/Layout/Header";
 import Meals from "./components/Meals";
+import useLockScrollbar from "./hooks/use-lock-scrollbar";
 
 const App = () => {
   const [cartIsShown, setCartIsShown] = useState(false);
+  const { lockScrollbar, unlockScrollbar } = useLockScrollbar();
 
   const showCartHandler = () => {
     setCartIsShown(true);
+    lockScrollbar();
   };
 
   const hideCartHandler = () => {
     setCartIsShown(false);
+    unlockScrollbar();
   };
 
   return (
