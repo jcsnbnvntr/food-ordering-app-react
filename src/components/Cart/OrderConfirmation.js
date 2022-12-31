@@ -8,7 +8,7 @@ const OrderConfirmation = (props) => {
   return (
     <div className={classes["confirmation-dialog"]}>
       <h2>
-        Your order is comlplete! <span className={classes.emoji}>🎉</span>
+        Your order is complete! <span className={classes.emoji}>🎉</span>
       </h2>
       <p>{`Order No. ${props.orderId}`}</p>
       <p>{formattedDate}</p>
