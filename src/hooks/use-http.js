@@ -1,13 +1,41 @@
-import { useCallback, useState } from "react";
+import { useCallback, useReducer } from "react";
+
+const initialHttpState = {
+  isLoading: false,
+  success: false,
+  error: false,
+};
+
+const httpReducer = (state, action) => {
+  switch (action.type) {
+    case "REQUEST START":
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case "REQUEST SUCCESS":
+      return {
+        ...state,
+        success: true,
+        isLoading: false,
+      };
+    case "REQUEST ERROR":
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false,
+      };
+    default:
+      return state;
+  }
+};
 
 const useHttp = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(null);
+  const [http, dispatchHttp] = useReducer(httpReducer, initialHttpState);
 
   const sendRequest = useCallback(async (requestConfig, applyData) => {
     try {
-      setIsLoading(true);
+      dispatchHttp({ type: "REQUEST START" });
 
       const response = await fetch(requestConfig.url, {
         method: requestConfig.method ? requestConfig.method : "GET",
@@ -25,19 +53,17 @@ const useHttp = () => {
       applyData?.(data); // it depends on how you want to transform the data
 
       setTimeout(() => {
-        setSuccess(true);
-        setIsLoading(false);
+        dispatchHttp({ type: "REQUEST SUCCESS" });
       }, 500);
     } catch (error) {
-      setError(error.message);
-      setIsLoading(false);
+      dispatchHttp({ type: "REQUEST ERROR", payload: error.message });
     }
   }, []);
 
   return {
-    isLoading,
-    error,
-    success,
+    isLoading: http.isLoading,
+    error: http.error,
+    success: http.success,
     sendRequest,
   };
 };

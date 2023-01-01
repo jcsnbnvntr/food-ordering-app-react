@@ -2,7 +2,7 @@ import { useReducer } from "react";
 
 import CartContext from "./cart-context";
 
-const defaultCartState = {
+const initialCartState = {
   items: [],
   totalAmount: 0,
 };
@@ -24,6 +24,7 @@ const cartReducer = (state, action) => {
           ...existingItemOnCart,
           quantity: existingItemOnCart.quantity + action.payload.quantity,
         };
+
         updatedItems = [...state.items];
         updatedItems[existingItemOnCartIndex] = updatedItem;
       } else {
@@ -65,7 +66,7 @@ const cartReducer = (state, action) => {
       };
     }
     case "CLEAR ITEMS": {
-      return defaultCartState;
+      return initialCartState;
     }
     default:
       return state;
@@ -73,7 +74,7 @@ const cartReducer = (state, action) => {
 };
 
 const CartProvider = (props) => {
-  const [cart, dispatchCart] = useReducer(cartReducer, defaultCartState);
+  const [cart, dispatchCart] = useReducer(cartReducer, initialCartState);
 
   const addItemToCartHandler = (item) => {
     dispatchCart({ type: "ADD_ITEM", payload: item });
