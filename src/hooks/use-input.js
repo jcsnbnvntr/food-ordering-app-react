@@ -2,8 +2,10 @@ import { useState } from "react";
 
 const useInput = (validator) => {
   const [enteredValue, setEnteredValue] = useState("");
+  const [isTouched, setIsTouched] = useState(false);
+
+  // validate input whenever this custom hook is re-run
   const isValid = validator(enteredValue);
-  const [isTouched, setIsTouched] = useState("");
   const hasError = !isValid && isTouched;
 
   const changeHandler = (ev) => {

@@ -8,6 +8,7 @@ const Checkout = (props) => {
   const phoneNumberValidator = (number) => number.trim().length === 11;
   const postalCodeValidator = (postalCode) => postalCode.trim().length === 4;
 
+  // these custom hooks will re-run during every re-render of this component
   const firstName = useInput(textValidator);
   const lastName = useInput(textValidator);
   const email = useInput(emailValidator);

@@ -21,6 +21,7 @@ const Cart = (props) => {
   const { items, totalAmount, addItem, removeItem, clearItems } =
     useContext(CartContext);
 
+  // re-execute during every re-render of this component
   const hasItems = items.length > 0;
 
   const cartItemAddHandler = (item) => {
