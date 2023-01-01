@@ -8,18 +8,18 @@ const initialHttpState = {
 
 const httpReducer = (state, action) => {
   switch (action.type) {
-    case "REQUEST START":
+    case "REQUEST_START":
       return {
         ...state,
         isLoading: true,
       };
-    case "REQUEST SUCCESS":
+    case "REQUEST_SUCCESS":
       return {
         ...state,
         success: true,
         isLoading: false,
       };
-    case "REQUEST ERROR":
+    case "REQUEST_ERROR":
       return {
         ...state,
         error: action.payload,
@@ -35,7 +35,7 @@ const useHttp = () => {
 
   const sendRequest = useCallback(async (requestConfig, applyData) => {
     try {
-      dispatchHttp({ type: "REQUEST START" });
+      dispatchHttp({ type: "REQUEST_START" });
 
       const response = await fetch(requestConfig.url, {
         method: requestConfig.method ? requestConfig.method : "GET",
@@ -53,10 +53,10 @@ const useHttp = () => {
       applyData?.(data); // it depends on how you want to transform the data
 
       setTimeout(() => {
-        dispatchHttp({ type: "REQUEST SUCCESS" });
+        dispatchHttp({ type: "REQUEST_SUCCESS" });
       }, 500);
     } catch (error) {
-      dispatchHttp({ type: "REQUEST ERROR", payload: error.message });
+      dispatchHttp({ type: "REQUEST_ERROR", payload: error.message });
     }
   }, []);
 
