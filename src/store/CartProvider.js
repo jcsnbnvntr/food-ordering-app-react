@@ -65,7 +65,7 @@ const cartReducer = (state, action) => {
         totalAmount: updatedTotalAmount,
       };
     }
-    case "CLEAR ITEMS": {
+    case "CLEAR_ITEMS": {
       return initialCartState;
     }
     default:
@@ -89,7 +89,7 @@ const CartProvider = (props) => {
   };
 
   const clearItemsFromCartHandler = () => {
-    dispatchCart({ type: "CLEAR ITEMS" });
+    dispatchCart({ type: "CLEAR_ITEMS" });
   };
 
   const cartContext = {
