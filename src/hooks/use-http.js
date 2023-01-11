@@ -49,7 +49,7 @@ const useHttp = () => {
 
       const data = await response.json();
 
-      // invoke function conditionally
+      // optional chaining - invoke function conditionally
       applyData?.(data); // it depends on how you want to transform the data
 
       setTimeout(() => {

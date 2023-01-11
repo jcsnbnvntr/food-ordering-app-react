@@ -70,7 +70,7 @@ const AvailableMeals = () => {
           placeholder="Search food you love"
           onSearch={searchHandler}
           onClear={clearHandler}
-          showClearButton={searchKey?.trim().length > 0}
+          showClearButton={searchKey?.trim().length > 0} // optional chaining - if searchKey is truthy, then invoke trim()
         />
         <ul>
           {filteredMealsList.length > 0 &&
